@@ -81,3 +81,10 @@ values_container = self.driver.find_elements(by=By.XPATH, value='//div[@class="s
 ```
 - In addition a universally unique ID was generated using the UUID4 package.
  
+ ##Todo list
+ - make local save one .json file not individuals
+ - refactor get_text_data to return tags for data
+ -      also look into other potential xpaths 
+ - make unittest for public methods
+ - refactor search bar for minimised view selenium opens it in
+ - make seperate classes instead of one

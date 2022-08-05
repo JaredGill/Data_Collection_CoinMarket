@@ -2,7 +2,7 @@
 Data scrape of the website https://coinmarketcap.com/
 
 
-###Building a Scraper 
+##Building a Scraper 
 - The package Selenium was used to open and control a webpage in Microsoft Edge to coinmarket using the code 
 ```python
 def __init__ (self, URL: str = "https://coinmarketcap.com/"):
@@ -55,5 +55,29 @@ self.coin_container = self.driver.find_elements(by=By.XPATH, value='//div[@class
 ```
 - As the website had dynamic pages, the page must scroll down to obtain the all the links.
     
-    
+## Retrieving Data and Images
+- The method data_scrape() was created to iterate through unique links to travel to the coins pages and obtain relevant data.
+- By passing in a number, you can look at the coins in order of their market rank descending from Bitcoin at rank #1
+```python
+url_counter = 0
+        coin_link_list = self.get_links()
+        
+        while url_counter < coins_to_scrape:
+            URL = coin_link_list[url_counter]
+            self.driver.get(URL)
+            self.get_image()
+            self.get_text_data()
+```
+- In a While loop, two methods were called: get_image() and get_text_data().
+- get_image() functioned similar to get_links working through a container, then finding image src for link/download, and alt for imgage name.
+- get_text_data() also found some elements either by direct xpath, or container usage as well. But one container's data couldnt be refined to individual xpaths as all the class names were exactly the same. So instead the container located all elements and stored them in a list to be called upon as required.
+```python
+values_container = self.driver.find_elements(by=By.XPATH, value='//div[@class="statsValue"]')
+        self.coin_data_dict['MarketCap'].append(values_container[0].text)
+        self.coin_data_dict['FullyDilutedMarketCap'].append(values_container[1].text)
+        self.coin_data_dict['Volume'].append(values_container[2].text)
+        self.coin_data_dict['Volume/MarketCap'].append(values_container[3].text)
+        self.coin_data_dict['CirculatingSupply'].append(values_container[4].text)
+```
+- In addition a universally unique ID was generated using the UUID4 package.
  
